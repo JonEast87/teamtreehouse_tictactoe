@@ -29,4 +29,4 @@ Extra Credit
 
 - [ ] Let a player add their name before the game starts.
 
-- [ ] Add programming to support playing against the computer. Only one player plays, the other is controlled by your programming.# teamtreehouse_tictactoe
+- [ ] Add programming to support playing against the computer. Only one player plays, the other is controlled by your programming.
