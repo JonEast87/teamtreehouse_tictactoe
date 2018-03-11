@@ -111,6 +111,31 @@ $(document).ready(function (event) {
         });
     }
 
+    function setTie() {
+        let player1 = $('#player1').attr('id');
+        let player2 = $('#player2').attr('id');
+        let background =
+            $('.screen-win').animate({
+                opacity: 1
+            }, 600, function () {
+                $(this).css('display', 'inline');
+                $(this).css('z-index', '1');
+                $(this).css('background', 'linear-gradient(to right, #3688C3 , #FFA000)');
+                $('.message').text(`Tied between ${player1} and ${player2}`);
+            });
+        $('#board').animate({
+            opacity: 0
+        }, 600, function () {
+            $(this).css('z-index', '-1');
+        });
+    }
+
+    function tieScreen() {
+        setTie();
+        $('.button').on('click', function () {
+            window.location.reload(true);
+        });
+    }
 
     function tieCheck(tie) {
         $('.box').each(function (index, value) {
@@ -118,8 +143,7 @@ $(document).ready(function (event) {
                 tie = tie + 1;
             }
         });
-        let check = tie === 9 ? alert('Tie') : false;
-        return check;
+        return tie === 9 ? tieScreen() : false;
     }
 
     function togglePlayer() {
