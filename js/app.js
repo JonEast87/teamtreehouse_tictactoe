@@ -35,11 +35,7 @@ $(document).ready(function (event) {
     }
 
     function checkBox(selected) {
-        if ($(selected).hasClass('box-filled-1') || $(selected).hasClass('box-filled-2')) {
-            return true;
-        } else {
-            return false;
-        }
+        return ($(selected).hasClass('box-filled-1') || $(selected).hasClass('box-filled-2')) ? true : false;
     }
 
     function checkPlayer() {
@@ -51,34 +47,28 @@ $(document).ready(function (event) {
     }
 
     function gameCondition(players, selected, tie) {
-        let boxIndex = $('.box').index(selected);
-        players.map((playerNumber) => {
-            console.log(playerNumber);
-        });
-        // for (let k = 0; k < players.length; k++) {
-        //     for (let j = 0; j < players[k].length; j++) {
-        //         if (players[k][j] === boxIndex) {
-        //             console.log('before ' + players[k]);
-        //             players[k].splice(j, 1);
-        //             console.log('after ' + players[k]);
-        //             checkScore(players[k].slice(), tie);
-        //         }
-        //     }
-        // }
+        for (let k = 0; k < players.length; k++) {
+            for (let j = 0; j < players[k].length; j++) {
+                if (players[k][j] === selected) {
+                    players[k].splice(j, 1);
+                    checkScore(players[k].slice(), tie);
+                }
+            }
+        }
     }
 
     function fillBox(players) {
+        let playerOne = players.playerOneArray,
+            playerTwo = players.playerTwoArray,
+            tie = players.tiePossibility;
         togglePlayer();
-        let tie = players.tiePossibility;
         $('.box').on('click', function (event) {
-            const selected = event.target;
+            const selected = $('.box').index(event.target);
             if (checkBox(selected) === false && $('#player1').hasClass('active')) {
-                let playerOne = players.playerOneArray;
                 $(this).addClass('box-filled-1');
                 togglePlayer();
                 gameCondition(playerOne, selected, tie);
             } else if (checkBox(selected) === false && $('#player2').hasClass('active')) {
-                let playerTwo = players.playerTwoArray;
                 $(this).addClass('box-filled-2');
                 togglePlayer();
                 gameCondition(playerTwo, selected, tie);
@@ -134,8 +124,8 @@ $(document).ready(function (event) {
 
     function togglePlayer() {
         if ($('#player1').hasClass('active')) {
-            $('#player1').toggleClass('active');
             $('#player2').toggleClass('active');
+            $('#player1').toggleClass('active');
         } else if ($('#player2').hasClass('active')) {
             $('#player2').toggleClass('active');
             $('#player1').toggleClass('active');
@@ -147,11 +137,7 @@ $(document).ready(function (event) {
     function winScreen() {
         setWin();
         $('.button').on('click', function () {
-            $('.box').each(function (index, value) {
-                $(value).removeClass('box-filled-1');
-                $(value).removeClass('box-filled-2');
-            });
-            boardScreen();
+            window.location.reload(true);
         });
     }
 
